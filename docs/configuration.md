@@ -43,7 +43,7 @@ Advanced Settings -> Gcode -> Layer Change Gcode -> ``TIMELAPSE_TAKE_FRAME``
 [timelapse]
 output_path: /usr/data/printer_data/timelapse/
 frame_path: /usr/data/printer_data/frames/
-snapshoturl: http://localhost:4408/webcam/?action=snapshot
+snapshoturl: http://localhost:4408/webcam/?action=snapshot # this is the default snapshotURL, change the link if you set up a different URL. 
 
 
 ```
