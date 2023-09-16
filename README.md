@@ -1,6 +1,6 @@
 # Moonraker-timelapse
 
-A 3rd party Moonraker component to create timelapse of 3D prints.
+A fork of a 3rd party Moonraker component to create timelapse of 3D prints. This fork is designed to get you up and running with the Creality K1 and K1 Max
 
 Learn More about...   
 Moonraker: https://moonraker.readthedocs.io/en/latest/   
@@ -16,9 +16,6 @@ See the installation instructions:
 
 Also there are configuration instructions:   
 [configuration.md](docs/configuration.md)
-
-For those prefer video guides, [Vez3d](https://www.youtube.com/channel/UCEZr0_vwtka0HteUcfzXaOQ) made a great video about it:    
-[![Mainsail2.1 timelapse Tutorial](https://img.youtube.com/vi/n-BVPidUDLI/0.jpg)](https://www.youtube.com/watch?v=n-BVPidUDLI)
 
 # Contributing
 See the constribution instructions:   
