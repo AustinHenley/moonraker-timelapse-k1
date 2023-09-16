@@ -571,7 +571,7 @@ class Timelapse:
             # prepare output filename
             now = datetime.now()
             date_time = now.strftime(self.config['time_format_code'])
-            outfile = f"timelapse_{gcodefilename}_{date_time}"
+            outfile = f"timelapse_{gcodefilename.rsplit('.', 1)[0]}_{date_time}"
             outfileFull = outfile + "_frames.zip"
 
             zipObj = ZipFile(self.out_dir + outfileFull, "w")
