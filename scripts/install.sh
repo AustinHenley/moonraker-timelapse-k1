@@ -30,7 +30,7 @@ SRC_DIR="$( cd "$(dirname "$(dirname "${BASH_SOURCE[0]}")")"/ && pwd )"
 ## Initialize global vars and arrays
 DATA_DIR=()
 DEPENDS_ON=( moonraker klipper )
-MOONRAKER_TARGET_DIR="${HOME}/moonraker/moonraker/components"
+MOONRAKER_TARGET_DIR="/usr/share/moonraker/moonraker/components/moonraker/moonraker/components"
 PKGLIST="wget"
 SERVICES=()
 ### END
@@ -61,10 +61,10 @@ function continue_install() {
 function initial_check() {
     dep_check_msg
     for i in "${DEPENDS_ON[@]}"; do
-        if [[ -d "${HOME}/${i}" ]]; then
+        if [[ -d "/usr/share/moonraker/moonraker/components/${i}" ]]; then
             dep_found_msg "${i}"
         fi
-        if [[ ! -d "${HOME}/${i}" ]]; then
+        if [[ ! -d "/usr/share/moonraker/moonraker/components/${i}" ]]; then
             dep_not_found_msg "${i}"
         fi
     done
@@ -132,7 +132,7 @@ function start_services() {
 ## Get Instance names, also used for single instance installs
 function get_instance_names() {
     local instances path
-    instances="$(find "${HOME}" -maxdepth 1 -type d -name "*_data" -printf "%P\n")"
+    instances="$(find "/usr/share/moonraker/moonraker/components" -maxdepth 1 -type d -name "*_data" -printf "%P\n")"
     while read -r path ; do
         DATA_DIR+=("${path}")
     done <<< "${instances}"
@@ -141,19 +141,19 @@ function get_instance_names() {
 function determine_data_structure() {
     ## See if there is more then 'klipper_config'
     get_instance_names
-    if [[ -d "${HOME}/klipper_config" ]] &&
+    if [[ -d "/usr/share/moonraker/moonraker/components/klipper_config" ]] &&
     [[ "${#DATA_DIR[@]}" -eq 1 ]]; then
         DATA_DIR+=( klipper_config )
         printf "Old data structure found '%s'" "${DATA_DIR[0]}"
         return
     fi
-    if [[ ! -d "${HOME}/klipper_config" ]] &&
+    if [[ ! -d "/usr/share/moonraker/moonraker/components/klipper_config" ]] &&
     [[ "${#DATA_DIR[@]}" -eq 1 ]] &&
     [[ "${DATA_DIR[0]}" == "printer_data" ]] ; then
         printf "New data structure found '%s' (single instance)\n" "${DATA_DIR[0]}"
         return
     fi
-    if [[ ! -d "${HOME}/klipper_config" ]] &&
+    if [[ ! -d "/usr/share/moonraker/moonraker/components/klipper_config" ]] &&
     [[ "${#DATA_DIR[@]}" -gt 1 ]] ; then
         printf "New data structure found ... (Multi instance)\n"
         return
@@ -181,7 +181,7 @@ function link_macro_file() {
     src="${SRC_DIR}/klipper_macro/timelapse.cfg"
     if [[ "${#DATA_DIR[@]}" -eq 1 ]] && [[ "${DATA_DIR[0]}" == "klipper_config" ]]; then
         link_to_msg "${DATA_DIR[0]}"
-        if ln -sf "${src}" "${HOME}/${DATA_DIR[0]}/timelapse.cfg"; then
+        if ln -sf "${src}" "/usr/share/moonraker/moonraker/components/${DATA_DIR[0]}/timelapse.cfg"; then
             link_to_ok_msg
             return
         else
@@ -191,7 +191,7 @@ function link_macro_file() {
     fi
     if [[ "${#DATA_DIR[@]}" -eq 1 ]] && [[ "${DATA_DIR[0]}" == "printer_data" ]]; then
         link_to_msg "${DATA_DIR[0]}"
-        if ln -sf "${src}" "${HOME}/${DATA_DIR[0]}/config/timelapse.cfg"; then
+        if ln -sf "${src}" "/usr/share/moonraker/moonraker/components/${DATA_DIR[0]}/config/timelapse.cfg"; then
             link_to_ok_msg
             return
         else
@@ -201,9 +201,9 @@ function link_macro_file() {
     fi
     if [[ "${#DATA_DIR[@]}" -gt 1 ]]; then
         for p in "${DATA_DIR[@]}"; do
-            if [[ -d "${HOME}/${p}/config" ]]; then
+            if [[ -d "/usr/share/moonraker/moonraker/components/${p}/config" ]]; then
                 link_to_msg "${p}"
-                if ln -sf "${src}" "${HOME}/${p}/config/timelapse.cfg"; then
+                if ln -sf "${src}" "/usr/share/moonraker/moonraker/components/${p}/config/timelapse.cfg"; then
                     link_to_ok_msg
                 else
                     link_to_failed_msg
