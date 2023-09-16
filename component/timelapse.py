@@ -686,7 +686,6 @@ class Timelapse:
                 + " -i '" + inputfiles + "'" \
                 + filterParam \
                 + " -threads 2 -g 5" \
-                + " -crf " + str(self.config['constant_rate_factor']) \
                 + " -vcodec mjpeg" \
                 + " -pix_fmt " + self.config['pixelformat'] \
                 + " -an" \
